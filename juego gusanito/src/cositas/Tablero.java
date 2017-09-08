@@ -1,18 +1,22 @@
 package cositas;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 public class Tablero 
 {
-	public int size = 4;
-	public int matriz[][] = new int[size][size];
+	private final static int SIZE = 4;
+	public int matriz[][] = new int[SIZE][SIZE];
 	
 	Tablero() {
 		llenaMatriz();
+		int r1 = ThreadLocalRandom.current().nextInt(0, SIZE);
+		int r2 = ThreadLocalRandom.current().nextInt(0, SIZE);
+		matriz[r1][r2] = 0;
 	}
 	
 	Tablero(Tablero t){ 		// copiar otro tablero
 		int[][] m = t.matriz;
-		for(int x=0; x < this.size; x++) {
-			for(int y=0; y < this.size; y++) {
+		for(int x=0; x < SIZE; x++) {
+			for(int y=0; y < SIZE; y++) {
 				this.matriz[x][y] = m[x][y];
 			}
 		}
@@ -20,9 +24,23 @@ public class Tablero
 	
 	public static void main(String[] args) 
 	{ 
+		System.out.println("generando tablero aleatorio");
 		Tablero m = new Tablero();
-		m.matriz[2][2]=1;
+		System.out.println();
 		m.imprimeMatriz();
+		
+		Tablero g = m.ganar();
+		if(g == null) {
+			System.out.println("no existe ningun movimiento ganador!");
+		} else {
+			System.out.println("encontrada secuencia ganadora de movimientos!");
+			g.imprimeMatriz();
+		}
+//		
+//		List<Tablero> m2 = m.sucesor();
+//		Tablero[] a = (Tablero[]) m2.toArray(new Tablero[m2.size()]);
+//		a[0].imprimeMatriz();
+		
 		
 		
 		//m.MovAbajo(0, 2);
@@ -95,9 +113,9 @@ public class Tablero
 		//int x=matriz.length;
 		//int y=matriz[0].length;
 		List<Tablero> l = new ArrayList<Tablero>();
-		for(int i=0; i<size ;i++)
+		for(int i=0; i<SIZE ;i++)
 		{
-			for(int j=0; j<size ;j++)
+			for(int j=0; j<SIZE ;j++)
 			{
 				if(matriz[i][j]==0) // cuadro vacio, no nos interesa
 					continue;
@@ -169,6 +187,10 @@ public class Tablero
 	}
 	
 	public boolean winner() {
+		return contarUnos() == 1;
+	}
+	
+	public int contarUnos() {
 		int c = 0;
 		for(int i=0;i<matriz.length;i++)
 		{
@@ -177,22 +199,24 @@ public class Tablero
 				c += matriz[i][j];
 			}
 		}
-		return c == 1;
+		return c;
 	}
 	
-	public void ganar() {
+	public Tablero ganar() {
+		if(this.winner()) {
+			return this;
+		}
 		Tablero winner = null; 
 		List<Tablero> s = this.sucesor();
-		Tablero[] ts = (Tablero[]) s.toArray();
+		Tablero[] ts = (Tablero[]) s.toArray(new Tablero[s.size()]);
 		for (Tablero tablero : ts) {
-			if(tablero.winner()) {
-				winner = tablero;
-				break;
-			}
-				
+			Tablero ganador = tablero.ganar();
+			if(ganador == null)
+				continue;
+			winner = ganador;
+			break;
 		}
-		winner.imprimeMatriz();
-		System.out.println("ganamos!!!");
+		return winner;
 		
 	}
 	public static Tablero test() {

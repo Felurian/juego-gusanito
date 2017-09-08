@@ -21,9 +21,9 @@ public class Tablero
 			}
 		}
 	}
-	
 	public static void main(String[] args) 
 	{ 
+		Scanner scanner = new Scanner(System.in);
 		System.out.println("generando tablero aleatorio");
 		Tablero m = new Tablero();
 		System.out.println();
@@ -37,8 +37,11 @@ public class Tablero
 			for(int i =g.size()-1; i >= 0; i--) {
 				g.get(i).imprimeMatriz();
 			}
-			System.out.println("Has ganado!");
+			System.out.println("Has ganado!!");
 		}
+		System.out.println("...Seguir jugando?");
+		scanner.nextLine();
+		main(args);
 	}
 	
 	public boolean vacio(int x, int y)

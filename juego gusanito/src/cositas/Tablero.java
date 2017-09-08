@@ -195,5 +195,8 @@ public class Tablero
 		System.out.println("ganamos!!!");
 		
 	}
+	public static Tablero test() {
+		return null;
+	}
 
 }

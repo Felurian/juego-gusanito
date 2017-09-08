@@ -29,12 +29,14 @@ public class Tablero
 		System.out.println();
 		m.imprimeMatriz();
 		
-		Tablero g = m.ganar();
+		List<Tablero> g = m.ganar();
 		if(g == null) {
 			System.out.println("no existe ningun movimiento ganador!");
 		} else {
-			System.out.println("encontrada secuencia ganadora de movimientos!");
-			g.imprimeMatriz();
+			System.out.println("encontrada secuencia de movimientos ganadora!");
+			for(int i =g.size()-1; i >= 0; i--) {
+				g.get(i).imprimeMatriz();
+			}
 		}
 //		
 //		List<Tablero> m2 = m.sucesor();
@@ -202,15 +204,38 @@ public class Tablero
 		return c;
 	}
 	
-	public Tablero ganar() {
+	public List<Tablero> tablero2Lista() {
+		List<Tablero> l = new ArrayList<Tablero>();
+		l.add(this);
+		return l;
+	}
+	
+	public List<Tablero> ganar() {
 		if(this.winner()) {
-			return this;
+			return tablero2Lista();
 		}
+		List<Tablero> winner = null;
+		List<Tablero> s = this.sucesor();
+		Tablero[] ts = (Tablero[]) s.toArray(new Tablero[s.size()]);
+		for (Tablero tablero : ts) {
+			List<Tablero> ganador = tablero.ganar();
+			if(ganador == null)
+				continue;
+			winner = ganador;
+			winner.add(this);
+			break;
+		}
+		return winner;
+		
+	}
+	public Tablero ganar2() {
+		if(this.winner())
+			return this;
 		Tablero winner = null; 
 		List<Tablero> s = this.sucesor();
 		Tablero[] ts = (Tablero[]) s.toArray(new Tablero[s.size()]);
 		for (Tablero tablero : ts) {
-			Tablero ganador = tablero.ganar();
+			Tablero ganador = tablero.ganar2();
 			if(ganador == null)
 				continue;
 			winner = ganador;
@@ -218,9 +243,6 @@ public class Tablero
 		}
 		return winner;
 		
-	}
-	public static Tablero test() {
-		return null;
 	}
 
 }

@@ -1,26 +1,25 @@
 package cositas;
 import java.util.*;
-public class Main 
+public class Tablero 
 {
 	public int matriz[][] = new int[4][4];
 	
-	Main() {
+	Tablero() {
 		LlenaMatriz();
 	}
 	
-	Main(int[][] mat){
+	Tablero(int[][] mat){
 		this.matriz = mat;
 	}
 	
 	public static void main(String[] args) 
 	{ 
-		Main m = new Main();
+		Tablero m = new Tablero();
 		m.matriz[2][2]=0;
 		m.ImprimeMatriz();
 		
 		m.MovAbajo(0,2);
 	}
-	
 	
 	public boolean vacio(int x, int y)
 	{
@@ -82,38 +81,32 @@ public class Main
 	{
 		int x=matriz.length;
 		int y=matriz[0].length;
-		List<int[][]> l = new ArrayList<int[][]>();
+		List<Tablero> l = new ArrayList<Tablero>();
 		for(int i=0; i<x ;i++)
 		{
 			for(int j=0; j<y ;j++)
 			{
-				if(matriz[i][j]==0)//Esta? vacio
+				if(matriz[i][j]==0) // cuadro vacio, no nos interesa
 					continue;
+				
+				if(puedeIzquierda(i,j)){
+					Tablero m2 = new Tablero(matriz); // creamos nueva matriz
+					m2.MovIzquierda(i, j);
+					l.add(m2);					// agregamos a la lista
+				}
+				if(puedeDerecha(i,j)){
+					Tablero m2 = new Tablero(matriz);
+					
+				}
+				if(puedeArriba(i,j)){
+					continue;
+				}
+				if(puedeAbajo(i,j)){
+					continue;
+				}
 			}
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	public void LlenaMatriz()

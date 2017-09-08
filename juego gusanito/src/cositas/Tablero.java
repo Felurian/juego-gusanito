@@ -37,21 +37,8 @@ public class Tablero
 			for(int i =g.size()-1; i >= 0; i--) {
 				g.get(i).imprimeMatriz();
 			}
+			System.out.println("Has ganado!");
 		}
-//		
-//		List<Tablero> m2 = m.sucesor();
-//		Tablero[] a = (Tablero[]) m2.toArray(new Tablero[m2.size()]);
-//		a[0].imprimeMatriz();
-		
-		
-		
-		//m.MovAbajo(0, 2);
-		//List l = m.sucesor();
-		//System.out.println("tablero sucesor 1:");
-		//((Tablero)l.get(0)).imprimeMatriz();
-		//System.out.println("tablero sucesor 2:");
-		//((Tablero)l.get(1)).imprimeMatriz();
-		//m.MovAbajo(0,2);
 	}
 	
 	public boolean vacio(int x, int y)
@@ -163,7 +150,7 @@ public class Tablero
 		}
 	}
 	
-	public void borraMatriz()
+	public void borraMatriz() // no se usa
 	{
 		for(int i=0;i<matriz.length;i++)
 		{
@@ -228,7 +215,7 @@ public class Tablero
 		return winner;
 		
 	}
-	public Tablero ganar2() {
+	public Tablero ganar2() { // no se necesita
 		if(this.winner())
 			return this;
 		Tablero winner = null; 

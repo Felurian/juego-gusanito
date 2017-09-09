@@ -199,17 +199,20 @@ public class Tablero
 		l.add(this);
 		return l;
 	}
-	
+	public Tablero[] list2Array(List<Tablero> s) {
+		return s.toArray(new Tablero[s.size()]);	// convertimos la lista en
+												 	// arreglo de tamaño s.size()
+	}
 	public List<Tablero> ganar() {
 		if(this.winner()) {
 			return tablero2Lista();
 		}
 		List<Tablero> winner = null;
 		List<Tablero> s = this.sucesor();
-		Tablero[] ts = (Tablero[]) s.toArray(new Tablero[s.size()]);
-		for (Tablero tablero : ts) {
+		Tablero[] ts = list2Array(s);
+		for (Tablero tablero : ts) { // 1 vuelta por cada tablero en ts
 			List<Tablero> ganador = tablero.ganar();
-			if(ganador == null)
+			if(ganador == null) // tablero no pudo ganar
 				continue;
 			winner = ganador;
 			winner.add(this);

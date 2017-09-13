@@ -42,6 +42,7 @@ public class Tablero
 		System.out.println("...Seguir jugando?");
 		scanner.nextLine();
 		main(args);
+		scanner.close();
 	}
 	
 	public boolean vacio(int x, int y)

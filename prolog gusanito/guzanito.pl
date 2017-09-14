@@ -1,4 +1,17 @@
-﻿transpose([[]|_], []).
+﻿jugar():-
+	t(TableroInicial),
+	write("Tablero inicial: "),
+	nl,
+	write("        "),
+	write(TableroInicial),
+	nl,
+	write("Resolviendo tablero:"),
+	nl,
+	write("        "),
+	ganador(TableroInicial,TableroFinal),
+	write(TableroFinal). /* sigue imprimiendo todos los tableros ganadores que encuentra */
+	
+transpose([[]|_], []).
 transpose(M, [X|T]) :- row(M, X, M1),
                        transpose(M1, T).
 row([], [], []).
